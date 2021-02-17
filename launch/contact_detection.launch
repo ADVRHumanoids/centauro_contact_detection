@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+<node name="feet_contacts_node" pkg="centauro_contact_detection" type="contact_detection_time_window" output="screen">
+
+</node>
+
+</launch>
