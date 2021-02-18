@@ -11,7 +11,8 @@ namespace contact_detection {
 class ContactState {
 
 public:
-    ContactState(ros::NodeHandle& nodeHandle);
+    ContactState(ros::NodeHandle& nodeHandle, int frequency);
+
     virtual ~ContactState();
 
 private:
@@ -27,8 +28,8 @@ private:
     ros::Publisher fl_contact_pub_;
 
     // constants - variables
-    float force_thold = 20.0;
-    int level;
+    float force_thold;  // force threshold
+    int level;  // level of threshold violations in time window
 
     // flags
     bool contacts_flag[4][5] = {{false, false, false, false, true}, {false, false, false, false, false}, {false, false, false, false, false}, {false, false, false, false, false}};
