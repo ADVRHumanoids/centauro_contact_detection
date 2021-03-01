@@ -9,10 +9,10 @@ add_definitions(--std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-#    message_generation
-#  roscpp
-#  std_msgs
-)
+    #    message_generation
+    #  roscpp
+    #  std_msgs
+    )
 
 find_package(roscpp REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -53,11 +53,11 @@ find_package(message_generation REQUIRED)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- add_message_files(
-   FILES
-   contacts.msg
-#   Message2.msg
- )
+add_message_files(
+    FILES
+    Contacts.msg
+    #   Message2.msg
+    )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -74,10 +74,10 @@ find_package(message_generation REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   std_msgs
- )
+generate_messages(
+    DEPENDENCIES
+    std_msgs
+    )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -109,15 +109,15 @@ find_package(message_generation REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-#  LIBRARIES centauro_contact_detection
-  CATKIN_DEPENDS #message_runtime
-  DEPENDS roscpp
-  DEPENDS std_msgs
-  DEPENDS geometry_msgs
-  DEPENDS xbot_msgs
-  DEPENDS message_runtime
-)
+    INCLUDE_DIRS include
+    #  LIBRARIES centauro_contact_detection
+    CATKIN_DEPENDS #message_runtime
+    DEPENDS roscpp
+    DEPENDS std_msgs
+    DEPENDS geometry_msgs
+    DEPENDS xbot_msgs
+    DEPENDS message_runtime
+    )
 
 ###########
 ## Build ##
@@ -126,35 +126,34 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-  ${roscpp_INCLUDE_DIRS}
-  ${xbot_msgs_INCLUDE_DIRS}
-  ${geometry_msgs_INCLUDE_DIRS}
-  ${std_msgs_INCLUDE_DIRS}
-)
+    include
+    ${catkin_INCLUDE_DIRS}
+    ${roscpp_INCLUDE_DIRS}
+    ${xbot_msgs_INCLUDE_DIRS}
+    ${geometry_msgs_INCLUDE_DIRS}
+    ${std_msgs_INCLUDE_DIRS}
+    )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/centauro_contact_detection.cpp
 # )
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
- add_executable(contact_detection_time_window
-     src/feet_contact_state.cpp
-     src/Feet_contact_state.cpp
-)
+add_executable(contact_detection_time_window
+    src/feet_contact_state.cpp
+    src/Feet_contact_state.cpp
+    )
+
+# header files for messages must be generated before compiling this target
+add_dependencies(contact_detection_time_window ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_executable(simple_test
     src/test.cpp
-)
+    )
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -167,22 +166,22 @@ add_executable(simple_test
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(contact_detection_time_window
-   #${catkin_LIBRARIES}
-   ${roscpp_LIBRARIES}
-   ${xbot_msgs_LIBRARIES}
-   ${geometry_msgs_LIBRARIES}
-   ${std_msgs_LIBRARIES}
- )
+target_link_libraries(contact_detection_time_window
+    #${catkin_LIBRARIES}
+    ${roscpp_LIBRARIES}
+    ${xbot_msgs_LIBRARIES}
+    ${geometry_msgs_LIBRARIES}
+    ${std_msgs_LIBRARIES}
+    )
 
 target_link_libraries(simple_test
-  #${catkin_LIBRARIES}
-  ${roscpp_LIBRARIES}
-  ${xbot_msgs_LIBRARIES}
-  ${geometry_msgs_LIBRARIES}
-  ${std_msgs_LIBRARIES}
-  ${iostream_LIBRARIES}
-)
+    #${catkin_LIBRARIES}
+    ${roscpp_LIBRARIES}
+    ${xbot_msgs_LIBRARIES}
+    ${geometry_msgs_LIBRARIES}
+    ${std_msgs_LIBRARIES}
+    ${iostream_LIBRARIES}
+    )
 
 #set(CMAKE_BUILD_TYPE Debug)
 #############
@@ -205,13 +204,13 @@ target_link_libraries(simple_test
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-## Mark libraries for installation
-## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
-# install(TARGETS ${PROJECT_NAME}
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
-# )
+# Mark libraries for installation
+# See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
+install(TARGETS contact_detection_time_window
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+    )
 
 ## Mark cpp header files for installation
 # install(DIRECTORY include/${PROJECT_NAME}/
