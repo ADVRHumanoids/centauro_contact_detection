@@ -4,7 +4,7 @@
 #include <geometry_msgs/WrenchStamped.h>
 #include <std_msgs/Bool.h>
 #include <algorithm>
-#include <centauro_contact_detection/contacts.h>
+#include <centauro_contact_detection/Contacts.h>
 
 namespace contact_detection {
 
@@ -13,33 +13,31 @@ class ContactState {
 public:
     ContactState(ros::NodeHandle& nodeHandle, int frequency);
 
+    void spin();
+
     virtual ~ContactState();
 
 private:
     ros::NodeHandle nodeHandle_;
 
     // Subscribers
-    ros::Subscriber fl_force_sub_;
-    ros::Subscriber fr_force_sub_;
-    ros::Subscriber hl_force_sub_;
-    ros::Subscriber hr_force_sub_;
+    std::vector<ros::Subscriber> force_sub_;
 
     // Publishers
-    ros::Publisher fl_contact_pub_;
+    int frequency_;
+    ros::Publisher contact_pub_;
 
     // constants - variables
-    float force_thold;  // force threshold
-    int level;  // level of threshold violations in time window
+    float force_thold_;  // force threshold
+    int level_;  // level of threshold violations in time window
 
     // flags
-    bool contacts_flag[4][5] = {{false, false, false, false, true}, {false, false, false, false, false}, {false, false, false, false, false}, {false, false, false, false, false}};
-    bool contacts[4] = {false, false, false, false};
+    std::vector<std::vector<bool>> contacts_flag_;
+    std::vector<bool> contacts_;
 
     // methods - callbacks
-    void ForceCallback1(const geometry_msgs::WrenchStamped::ConstPtr& force_msg);
-    void ForceCallback2(const geometry_msgs::WrenchStamped::ConstPtr& force_msg);
-    void ForceCallback3(const geometry_msgs::WrenchStamped::ConstPtr& force_msg);
-    void ForceCallback4(const geometry_msgs::WrenchStamped::ConstPtr& force_msg);
+    void ForceCallback(const geometry_msgs::WrenchStamped::ConstPtr& force_msg,
+                       int foot_idx);
 };
 
 }   //namespace
