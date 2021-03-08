@@ -13,6 +13,8 @@ int main(int argc, char** argv)
 
     ROS_INFO("\n\n-----------Out of constructor, ready to spin-----------");
 
+    contact_state.spin();
+
     //ros::spin();    // Call any callback function waiting
 
     return 0;

@@ -5,15 +5,16 @@ namespace contact_detection {
 ContactState::ContactState(ros::NodeHandle& nodeHandle, int frequency):
     nodeHandle_(nodeHandle),
     frequency_(frequency),
-    contacts_(4, false),
-    contacts_flag_(4, std::vector<bool>(5, false))
+    contacts_(4, true),
+    contacts_flag_(4, std::vector<bool>(5, true)),
+    force_sub_(4)
 {
     // force subscribers
     for(int i = 0; i < 4; i++)
     {
         std::string topicname = "/cartesian/force_estimation/contact_" + std::to_string(i+1);
 
-        auto sub = nodeHandle_.subscribe<geometry_msgs::WrenchStamped>(
+        force_sub_[i] = nodeHandle_.subscribe<geometry_msgs::WrenchStamped>(
                     topicname,
                     10,
                     [this, i](const geometry_msgs::WrenchStamped::ConstPtr& msg)
